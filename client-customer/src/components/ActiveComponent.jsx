@@ -12,53 +12,40 @@ class Active extends Component {
 
   render() {
     return (
-      <div className="align-center">
-        <h2 className="text-center">ACTIVE ACCOUNT</h2>
+      <div className="login-page">
 
-        <form>
-          <table className="align-center">
-            <tbody>
+        <div className="login-card">
+          <h2>Activate Account 🔐</h2>
+          <p className="login-sub">Enter your ID and activation token</p>
 
-              <tr>
-                <td>ID</td>
-                <td>
-                  <input
-                    type="text"
-                    value={this.state.txtID}
-                    onChange={(e) =>
-                      this.setState({ txtID: e.target.value })
-                    }
-                  />
-                </td>
-              </tr>
+          <form>
 
-              <tr>
-                <td>Token</td>
-                <td>
-                  <input
-                    type="text"
-                    value={this.state.txtToken}
-                    onChange={(e) =>
-                      this.setState({ txtToken: e.target.value })
-                    }
-                  />
-                </td>
-              </tr>
+            <input
+              type="text"
+              placeholder="User ID"
+              value={this.state.txtID}
+              onChange={(e) =>
+                this.setState({ txtID: e.target.value })
+              }
+            />
 
-              <tr>
-                <td></td>
-                <td>
-                  <input
-                    type="submit"
-                    value="ACTIVE"
-                    onClick={(e) => this.btnActiveClick(e)}
-                  />
-                </td>
-              </tr>
+            <input
+              type="text"
+              placeholder="Activation Token"
+              value={this.state.txtToken}
+              onChange={(e) =>
+                this.setState({ txtToken: e.target.value })
+              }
+            />
 
-            </tbody>
-          </table>
-        </form>
+            <button onClick={(e) => this.btnActiveClick(e)}>
+              ACTIVATE
+            </button>
+
+          </form>
+
+        </div>
+
       </div>
     );
   }

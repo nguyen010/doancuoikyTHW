@@ -5,6 +5,9 @@ const JwtUtil = require('../utils/JwtUtil');
 const AdminDAO = require('../models/AdminDAO');
 const CategoryDAO = require('../models/CategoryDAO');
 const ProductDAO = require('../models/ProductDAO');
+const OrderDAO = require('../models/OrderDAO'); 
+const CustomerDAO = require('../models/CustomerDAO'); // Giả định bạn đã có file này
+
 
 // ===================== LOGIN =====================
 router.post('/login', async (req, res) => {
@@ -18,6 +21,7 @@ router.post('/login', async (req, res) => {
 
     if (admin) {
       const token = JwtUtil.genToken(username, password);
+
       res.json({
         success: true,
         message: 'Authentication successful',
@@ -37,6 +41,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
+
 // ===================== TOKEN =====================
 router.get('/token', JwtUtil.checkToken, (req, res) => {
   const token =
@@ -48,6 +53,7 @@ router.get('/token', JwtUtil.checkToken, (req, res) => {
     token: token
   });
 });
+
 
 // ===================== CATEGORY =====================
 router.get('/categories', JwtUtil.checkToken, async (req, res) => {
@@ -74,6 +80,7 @@ router.delete('/categories/:id', JwtUtil.checkToken, async (req, res) => {
   const result = await CategoryDAO.delete(req.params.id);
   res.json(result);
 });
+
 
 // ===================== PRODUCT =====================
 router.get('/products', JwtUtil.checkToken, async (req, res) => {
@@ -132,6 +139,53 @@ router.put('/products/:id', JwtUtil.checkToken, async (req, res) => {
 
 router.delete('/products/:id', JwtUtil.checkToken, async (req, res) => {
   const result = await ProductDAO.delete(req.params.id);
+  res.json(result);
+});
+
+
+// ===================== ORDER =====================
+
+// lấy tất cả đơn hàng
+router.get('/orders', JwtUtil.checkToken, async (req, res) => {
+  const orders = await OrderDAO.selectAll();
+  res.json(orders);
+});
+
+// cập nhật trạng thái đơn hàng
+router.put('/orders/status/:id', JwtUtil.checkToken, async (req, res) => {
+  const _id = req.params.id;
+  const newStatus = req.body.status;
+
+  const result = await OrderDAO.update(_id, newStatus);
+  res.json(result);
+});
+
+
+// ===================== CUSTOMER =====================
+
+// lấy danh sách tất cả khách hàng
+router.get('/customers', JwtUtil.checkToken, async (req, res) => {
+  const customers = await CustomerDAO.selectAll();
+  res.json(customers);
+});
+
+// lấy danh sách đơn hàng của 1 khách hàng cụ thể dựa vào ID khách hàng
+router.get('/orders/customer/:cid', JwtUtil.checkToken, async (req, res) => {
+  const cid = req.params.cid;
+  const orders = await OrderDAO.selectByCustomerID(cid);
+  res.json(orders);
+});
+// cập nhật trạng thái active/deactive khách hàng
+router.put('/customers/active/:id', JwtUtil.checkToken, async (req, res) => {
+  const _id = req.params.id;
+  const active = req.body.active;
+  const result = await CustomerDAO.updateActive(_id, active);
+  res.json(result);
+});
+// gửi mail kích hoạt cho khách hàng
+router.get('/customers/sendmail/:id', JwtUtil.checkToken, async (req, res) => {
+  const _id = req.params.id;
+  const result = await CustomerDAO.sendMailActivate(_id);
   res.json(result);
 });
 

@@ -6,6 +6,7 @@
   "homepage": "/admin",
   "proxy": "http://localhost:3000",
   "scripts": {
+    "start": "vite",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",

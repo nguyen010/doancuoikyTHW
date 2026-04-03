@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import MyContext from '../contexts/MyContext';
 import { Navigate } from 'react-router-dom';
+import logo from '../assets/logovlu.png';
 
 class Login extends Component {
   static contextType = MyContext;
@@ -15,55 +16,84 @@ class Login extends Component {
   }
 
   render() {
-    // ĐÃ LOGIN → CHUYỂN TRANG
     if (this.context.token !== '') {
       return <Navigate to="/admin/home" replace />;
     }
 
-    // CHƯA LOGIN → FORM
     return (
-      <div className="align-valign-center">
-        <h2 className="text-center">ADMIN LOGIN</h2>
-        <form>
-          <table className="align-center">
-            <tbody>
-              <tr>
-                <td>Username</td>
-                <td>
-                  <input
-                    type="text"
-                    value={this.state.txtUsername}
-                    onChange={(e) =>
-                      this.setState({ txtUsername: e.target.value })
-                    }
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>Password</td>
-                <td>
-                  <input
-                    type="password"
-                    value={this.state.txtPassword}
-                    onChange={(e) =>
-                      this.setState({ txtPassword: e.target.value })
-                    }
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td></td>
-                <td>
-                  <input
-                    type="submit"
-                    value="LOGIN"
-                    onClick={(e) => this.btnLoginClick(e)}
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </form>
+      <div className="login-container">
+        <div className="login-box">
+
+          {/* 🔥 LOGO + BRAND */}
+          <div style={{ textAlign: "center", marginBottom: "20px" }}>
+            
+            <img
+              src={logo}
+              alt="logo"
+              style={{
+                width: "65px",
+                height: "65px",
+                objectFit: "contain",
+                marginBottom: "10px",
+                borderRadius: "12px"
+              }}
+            />
+
+            <h2 style={{
+              fontSize: "24px",
+              fontWeight: "bold",
+              color: "#1e3a8a",
+              margin: 0
+            }}>
+              VLU Phone
+            </h2>
+
+            <p style={{
+              fontSize: "13px",
+              color: "#6b7280",
+              marginTop: "5px"
+            }}>
+              Admin Management System
+            </p>
+
+          </div>
+
+          {/* INPUT USERNAME */}
+          <input
+            type="text"
+            placeholder="👤 Username"
+            value={this.state.txtUsername}
+            onChange={(e) =>
+              this.setState({ txtUsername: e.target.value })
+            }
+          />
+
+          {/* INPUT PASSWORD */}
+          <input
+            type="password"
+            placeholder="🔒 Password"
+            value={this.state.txtPassword}
+            onChange={(e) =>
+              this.setState({ txtPassword: e.target.value })
+            }
+          />
+
+          {/* BUTTON */}
+          <button
+            className="btn btn-edit"
+            style={{
+              width: '100%',
+              marginTop: '12px',
+              padding: "10px",
+              fontWeight: "bold",
+              fontSize: "15px"
+            }}
+            onClick={(e) => this.btnLoginClick(e)}
+          >
+            Login
+          </button>
+
+        </div>
       </div>
     );
   }

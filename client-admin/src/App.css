@@ -1,118 +1,255 @@
-.body-customer {
-  width: 1150px;
-  height: fit-content;
-  margin: 0 auto;
+/* ===== RESET ===== */
+* {
+  box-sizing: border-box;
 }
 
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #eef2f7;
+  color: #0f172a;
+}
+
+/* ===== LAYOUT ===== */
 .body-admin {
-  width: fit-content;
-  height: fit-content;
-  margin: 0 auto;
-}
-
-div.inline {
-  display: inline-block;
-}
-
-figure.caption-right {
   display: flex;
-  align-items: center;
+  min-height: 100vh;
 }
 
-.align-center {
-  width: 100%;
-  text-align: center;
-  margin-top: 30px;
+/* ===== SIDEBAR ===== */
+.sidebar {
+  width: 250px;
+  background: linear-gradient(180deg, #020617, #0f172a);
+  color: white;
+  padding: 25px 20px;
+  box-shadow: 5px 0 20px rgba(0,0,0,0.2);
 }
 
-.align-valign-center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 0 20px 20px 20px;
-  border: 1px solid black;
+.sidebar h2 {
+  margin-bottom: 30px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #e2e8f0;
 }
 
-.text-center {
-  text-align: center;
+/* MENU LINK */
+.sidebar a {
+  display: block;
+  padding: 12px 14px;
+  color: #94a3b8;
+  text-decoration: none;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  transition: 0.25s;
 }
 
-span.link {
-  cursor: pointer;
-  color: blue;
-  text-decoration: underline;
+/* HOVER */
+.sidebar a:hover {
+  background: rgba(59,130,246,0.15);
+  color: white;
+  transform: translateX(6px);
 }
 
-/* menu.css */
-div.border-bottom {
-  border-bottom: 1px solid black;
-  padding: 10px 0;
+/* ACTIVE */
+.sidebar a.active {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 5px 15px rgba(59,130,246,0.4);
 }
 
-div.float-left {
-  float: left;
+/* USER */
+.sidebar p {
+  color: #cbd5f5;
 }
 
-div.float-right {
-  float: right;
+/* ===== CONTENT ===== */
+.content {
+  flex: 1;
+  padding: 30px;
 }
 
-div.float-clear {
-  clear: both;
+/* ===== CARD ===== */
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  transition: 0.3s;
 }
 
-ul.menu {
+.card:hover {
+  transform: translateY(-6px);
+}
+
+/* ===== DASHBOARD ===== */
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.card h3 {
   margin: 0;
-  padding: 0;
-  list-style: none;
+  color: #64748b;
+  font-size: 14px;
 }
 
-li.menu {
-  display: inline-block;
-  margin-right: 20px;
-  text-transform: uppercase;
-}
-
-form.search {
-  margin: 0;
-}
-
-input.keyword {
-  width: 110px;
-}
-
-/* datatable.css */
-table.datatable {
-  width: 100%;
-  text-align: center;
-  border-collapse: collapse;
-}
-
-table.datatable th,
-table.datatable td {
-  border: 1px solid #ccc;
-  padding: 8px;
-}
-
-/* header */
-table.datatable tr:first-child {
-  background-color: #ffcc00;
+.card h2 {
+  margin-top: 10px;
+  font-size: 28px;
   font-weight: bold;
 }
 
-/* even rows (except header) */
-table.datatable tr:nth-child(even):not(:first-child) {
-  background-color: #f5f5f5;
+/* ===== TABLE ===== */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
 }
 
-/* odd rows (except header) */
-table.datatable tr:nth-child(odd):not(:first-child) {
-  background-color: #ffeeaa;
+.table th {
+  background: #f8fafc;
+  padding: 15px;
+  text-align: left;
+  font-weight: 600;
+  color: #475569;
 }
 
-/* hover (except header) */
-table.datatable tr:not(:first-child):hover {
-  background-color: #dcfcfc;
+.table td {
+  padding: 15px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.table tr:hover {
+  background: #f1f5f9;
   cursor: pointer;
+}
+
+/* IMAGE */
+.table img {
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+/* ===== PAGINATION ===== */
+.pagination {
+  margin-top: 15px;
+  display: flex;
+  gap: 8px;
+}
+
+.pagination button {
+  padding: 6px 12px;
+  border: none;
+  background: #e2e8f0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.pagination button:hover {
+  background: #cbd5f5;
+}
+
+.pagination button.active {
+  background: #3b82f6;
+  color: white;
+}
+
+/* ===== BUTTON ===== */
+.btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.25s;
+  font-weight: 500;
+}
+
+.btn-add {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+}
+
+.btn-update {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: white;
+}
+
+.btn-delete {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+}
+
+.btn:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* ===== FORM ===== */
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  transition: 0.2s;
+  color: #0f172a;
+  background: #f8fafc;
+}
+
+input:focus, select:focus {
+  outline: none;
+  border: 1px solid #3b82f6;
+  background: white;
+  box-shadow: 0 0 0 2px rgba(59,130,246,0.2);
+}
+
+/* ===== FORM CARD ===== */
+.form-card {
+  max-width: 420px;
+}
+
+/* ===== LOGIN ===== */
+.login-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at top, #020617, #0f172a);
+}
+
+.login-box {
+  background: white;
+  padding: 35px;
+  border-radius: 18px;
+  width: 340px;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.35);
+  animation: fadeIn 0.6s ease;
+}
+
+.login-box input {
+  margin-top: 10px;
+}
+
+.login-box input::placeholder {
+  color: #94a3b8;
+}
+
+/* ===== ANIMATION ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
+import withRouter from '../utils/withRouter';
 
 class Signup extends Component {
   constructor(props) {
@@ -15,82 +16,62 @@ class Signup extends Component {
 
   render() {
     return (
-      <div className="align-center">
-        <h2 className="text-center">SIGN-UP</h2>
+      <div className="login-page">
 
-        <form>
-          <table className="align-center">
-            <tbody>
+        <div className="login-card">
+          <h2>Create Account ✨</h2>
+          <p className="login-sub">Sign up to get started</p>
 
-              <tr>
-                <td>Username</td>
-                <td>
-                  <input
-                    type="text"
-                    value={this.state.txtUsername}
-                    onChange={(e) => this.setState({ txtUsername: e.target.value })}
-                  />
-                </td>
-              </tr>
+          <form>
 
-              <tr>
-                <td>Password</td>
-                <td>
-                  <input
-                    type="password"
-                    value={this.state.txtPassword}
-                    onChange={(e) => this.setState({ txtPassword: e.target.value })}
-                  />
-                </td>
-              </tr>
+            <input
+              type="text"
+              placeholder="Username"
+              value={this.state.txtUsername}
+              onChange={(e) => this.setState({ txtUsername: e.target.value })}
+            />
 
-              <tr>
-                <td>Name</td>
-                <td>
-                  <input
-                    type="text"
-                    value={this.state.txtName}
-                    onChange={(e) => this.setState({ txtName: e.target.value })}
-                  />
-                </td>
-              </tr>
+            <input
+              type="password"
+              placeholder="Password"
+              value={this.state.txtPassword}
+              onChange={(e) => this.setState({ txtPassword: e.target.value })}
+            />
 
-              <tr>
-                <td>Phone</td>
-                <td>
-                  <input
-                    type="tel"
-                    value={this.state.txtPhone}
-                    onChange={(e) => this.setState({ txtPhone: e.target.value })}
-                  />
-                </td>
-              </tr>
+            <input
+              type="text"
+              placeholder="Full Name"
+              value={this.state.txtName}
+              onChange={(e) => this.setState({ txtName: e.target.value })}
+            />
 
-              <tr>
-                <td>Email</td>
-                <td>
-                  <input
-                    type="email"
-                    value={this.state.txtEmail}
-                    onChange={(e) => this.setState({ txtEmail: e.target.value })}
-                  />
-                </td>
-              </tr>
+            <input
+              type="tel"
+              placeholder="Phone"
+              value={this.state.txtPhone}
+              onChange={(e) => this.setState({ txtPhone: e.target.value })}
+            />
 
-              <tr>
-                <td></td>
-                <td>
-                  <input
-                    type="submit"
-                    value="SIGN-UP"
-                    onClick={(e) => this.btnSignupClick(e)}
-                  />
-                </td>
-              </tr>
+            <input
+              type="email"
+              placeholder="Email"
+              value={this.state.txtEmail}
+              onChange={(e) => this.setState({ txtEmail: e.target.value })}
+            />
 
-            </tbody>
-          </table>
-        </form>
+            <button onClick={(e) => this.btnSignupClick(e)}>
+              SIGN UP
+            </button>
+
+          </form>
+
+          {/* BONUS */}
+          <p style={{ marginTop: "10px", fontSize: "13px" }}>
+            Already have an account? <a href="/login">Login</a>
+          </p>
+
+        </div>
+
       </div>
     );
   }
@@ -99,19 +80,15 @@ class Signup extends Component {
   btnSignupClick(e) {
     e.preventDefault();
 
-    const username = this.state.txtUsername;
-    const password = this.state.txtPassword;
-    const name = this.state.txtName;
-    const phone = this.state.txtPhone;
-    const email = this.state.txtEmail;
+    const { txtUsername, txtPassword, txtName, txtPhone, txtEmail } = this.state;
 
-    if (username && password && name && phone && email) {
+    if (txtUsername && txtPassword && txtName && txtPhone && txtEmail) {
       const account = {
-        username: username,
-        password: password,
-        name: name,
-        phone: phone,
-        email: email
+        username: txtUsername,
+        password: txtPassword,
+        name: txtName,
+        phone: txtPhone,
+        email: txtEmail
       };
 
       this.apiSignup(account);
@@ -126,6 +103,10 @@ class Signup extends Component {
       .then((res) => {
         const result = res.data;
         alert(result.message);
+
+        if (result.success === true) {
+          this.props.navigate('/login'); // 👉 chuyển sang login
+        }
       })
       .catch((err) => {
         console.error(err);
@@ -134,4 +115,4 @@ class Signup extends Component {
   }
 }
 
-export default Signup;
+export default withRouter(Signup);

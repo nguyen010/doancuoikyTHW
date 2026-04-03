@@ -29,24 +29,27 @@ class Category extends Component {
     });
 
     return (
-      <div>
-        <div className="float-left">
-          <h2 className="text-center">CATEGORY LIST</h2>
-          <table className="datatable" border="1">
-            <tbody>
-              <tr className="datatable">
-                <th>ID</th>
-                <th>Name</th>
-              </tr>
-              {cates}
-            </tbody>
-          </table>
-        </div>
+      <div style={{ color: 'black' }}>
+  <div className="float-left">
+    <h2 className="text-center">CATEGORY LIST</h2>
+    <table className="datatable" border="1">
+      <tbody>
+        <tr className="datatable">
+          <th>ID</th>
+          <th>Name</th>
+        </tr>
+        {cates}
+      </tbody>
+    </table>
+  </div>
 
-        <div className="inline" />
-        <CategoryDetail item={this.state.itemSelected} updateCategories={this.updateCategories} />
-        <div className="float-clear" />
-      </div>
+  <div className="inline" />
+  <CategoryDetail 
+    item={this.state.itemSelected} 
+    updateCategories={this.updateCategories} 
+  />
+  <div className="float-clear" />
+</div>
     );
   }
   updateCategories = (categories) => { // arrow-function

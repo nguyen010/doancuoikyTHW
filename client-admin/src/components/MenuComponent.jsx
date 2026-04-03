@@ -1,43 +1,96 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import MyContext from '../contexts/MyContext';
+import logo from '../assets/logovlu.png';
+
+// 👉 wrapper để dùng hook trong class
+function withLocation(ComponentClass) {
+  return function (props) {
+    const location = useLocation();
+    return <ComponentClass {...props} location={location} />;
+  };
+}
 
 class Menu extends Component {
   static contextType = MyContext;
 
   render() {
+    const { pathname } = this.props.location;
+
     return (
-      <div className="border-bottom">
-        {/* LEFT MENU */}
-        <div className="float-left">
-          <ul className="menu">
-            <li className="menu">
-              <Link to="/admin/home">Home</Link>
-            </li>
-            <li className="menu">
-              <Link to="/admin/category">Category</Link>
-            </li>
-            <li className="menu">
-              <Link to="/admin/product">Product</Link>
-            </li>
-            <li className="menu">
-              <Link to="/admin/order">Order</Link>
-            </li>
-            <li className="menu">
-              <Link to="/admin/customer">Customer</Link>
-            </li>
-          </ul>
+      <div className="sidebar">
+
+        {/* 🔥 LOGO + BRAND */}
+        <div style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "10px",
+          marginBottom: "30px"
+        }}>
+          <img
+            src={logo}
+            alt="logo"
+            style={{
+              width: "40px",
+              height: "40px",
+              borderRadius: "10px"
+            }}
+          />
+          <h2 style={{ margin: 0 }}>VLU Phone</h2>
         </div>
 
-        {/* RIGHT MENU */}
-        <div className="float-right">
-          Hello <b>{this.context.username}</b> |{' '}
-          <Link to="/admin/home" onClick={() => this.lnkLogoutClick()}>
+        {/* 🔥 MENU */}
+        <Link
+          to="/admin/home"
+          className={pathname.includes('/home') ? 'active' : ''}
+        >
+          📊 Dashboard
+        </Link>
+
+        <Link
+          to="/admin/product"
+          className={pathname.includes('/product') ? 'active' : ''}
+        >
+          📱 Products
+        </Link>
+
+        <Link
+          to="/admin/category"
+          className={pathname.includes('/category') ? 'active' : ''}
+        >
+          📂 Category
+        </Link>
+
+        <Link
+          to="/admin/order"
+          className={pathname.includes('/order') ? 'active' : ''}
+        >
+          🧾 Orders
+        </Link>
+
+        <Link
+          to="/admin/customer"
+          className={pathname.includes('/customer') ? 'active' : ''}
+        >
+          👤 Customers
+        </Link>
+
+        {/* 🔥 USER */}
+        <div style={{ marginTop: "30px" }}>
+          <hr />
+          <p style={{ marginTop: "15px" }}>
+            Hello <b>{this.context.username}</b>
+          </p>
+
+          <button
+            className="btn btn-delete"
+            style={{ width: "100%" }}
+            onClick={() => this.lnkLogoutClick()}
+          >
             Logout
-          </Link>
+          </button>
         </div>
 
-        <div className="float-clear" />
       </div>
     );
   }
@@ -48,4 +101,4 @@ class Menu extends Component {
   }
 }
 
-export default Menu;
+export default withLocation(Menu);

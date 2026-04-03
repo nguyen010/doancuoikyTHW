@@ -4,7 +4,7 @@ import MyContext from '../contexts/MyContext';
 import ProductDetail from './ProductDetailComponent';
 
 class Product extends Component {
-  static contextType = MyContext; // dùng this.context để lấy global state
+  static contextType = MyContext;
 
   constructor(props) {
     super(props);
@@ -18,21 +18,16 @@ class Product extends Component {
 
   render() {
     const prods = this.state.products.map((item) => (
-      <tr
-        key={item._id}
-        className="datatable"
-        onClick={() => this.trItemClick(item)}
-      >
-        <td>{item._id}</td>
+      <tr key={item._id} onClick={() => this.trItemClick(item)}>
         <td>{item.name}</td>
         <td>{item.price}</td>
-        <td>{new Date(item.cdate).toLocaleString()}</td>
         <td>{item.category.name}</td>
         <td>
           <img
             src={`data:image/jpg;base64,${item.image}`}
-            width="100px"
-            height="100px"
+            width="60"
+            height="60"
+            style={{ borderRadius: "6px" }}
             alt=""
           />
         </td>
@@ -45,58 +40,60 @@ class Product extends Component {
         const page = index + 1;
         if (page === this.state.curPage) {
           return (
-            <span key={index}>
-              | <b>{page}</b> |
-            </span>
+            <button key={index} className="btn btn-edit">
+              {page}
+            </button>
           );
         }
         return (
-          <span
+          <button
             key={index}
-            className="link"
+            className="btn"
             onClick={() => this.lnkPageClick(page)}
           >
-            | {page} |
-          </span>
+            {page}
+          </button>
         );
       }
     );
 
     return (
-      <div>
-        <div className="float-left">
-          <h2 className="text-center">PRODUCT LIST</h2>
+      <div style={{ display: "flex", gap: "30px" }}>
+        
+        {/* LEFT: PRODUCT LIST */}
+        <div style={{ flex: 2 }}>
+          <h2>📦 Product List</h2>
 
-          <table className="datatable" border="1">
-            <tbody>
-              <tr className="datatable">
-                <th>ID</th>
+          <table className="table">
+            <thead>
+              <tr>
                 <th>Name</th>
                 <th>Price</th>
-                <th>Creation date</th>
                 <th>Category</th>
                 <th>Image</th>
               </tr>
+            </thead>
 
+            <tbody>
               {prods}
-
-              <tr>
-                <td colSpan="6">{pagination}</td>
-              </tr>
             </tbody>
           </table>
+
+          {/* PAGINATION */}
+          <div style={{ marginTop: "15px", display: "flex", gap: "5px" }}>
+            {pagination}
+          </div>
         </div>
 
-        <div className="inline" />
+        {/* RIGHT: DETAIL FORM */}
+        <div style={{ flex: 1 }}>
+          <ProductDetail
+            item={this.state.itemSelected}
+            curPage={this.state.curPage}
+            updateProducts={this.updateProducts}
+          />
+        </div>
 
-        {/*updateProducts + curPage được truyền vào đây */}
-        <ProductDetail
-          item={this.state.itemSelected}
-          curPage={this.state.curPage}
-          updateProducts={this.updateProducts}
-        />
-
-        <div className="float-clear" />
       </div>
     );
   }
@@ -105,7 +102,6 @@ class Product extends Component {
     this.apiGetProducts(this.state.curPage);
   }
 
-  // event handlers
   lnkPageClick(page) {
     this.setState({ itemSelected: null });
     this.apiGetProducts(page);
@@ -115,12 +111,10 @@ class Product extends Component {
     this.setState({ itemSelected: item });
   }
 
-  // hàm updateProducts mày cần thêm
   updateProducts = (products, noPages) => {
     this.setState({ products, noPages });
   };
 
-  // api
   apiGetProducts(page) {
     const config = {
       headers: { 'x-access-token': this.context.token }

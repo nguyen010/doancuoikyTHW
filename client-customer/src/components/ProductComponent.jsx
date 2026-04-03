@@ -12,52 +12,51 @@ class Product extends Component {
   }
 
   render() {
-    const prods = this.state.products.map((item) => {
-      return (
-        <div key={item._id} className="inline">
-          <figure>
-            <Link to={'/product/' + item._id}>
-              <img
-                src={'data:image/jpg;base64,' + item.image}
-                width="300px"
-                height="300px"
-                alt=""
-              />
-            </Link>
-            <figcaption className="text-center">
-              {item.name}
-              <br />
-              Price: {item.price}
-            </figcaption>
-          </figure>
-        </div>
-      );
-    });
+    const prods = this.state.products.map((item) => (
+      <div key={item._id} className="product-card">
+        <Link to={'/product/' + item._id}>
+          <img
+            src={'data:image/jpg;base64,' + item.image}
+            alt={item.name}
+          />
+        </Link>
+
+        <h3>{item.name}</h3>
+
+        <p className="price">
+          {item.price.toLocaleString()} VND
+        </p>
+
+        <Link to={'/product/' + item._id}>
+          <button className="btn-buy">View</button>
+        </Link>
+      </div>
+    ));
 
     return (
-      <div className="text-center">
-        <h2 className="text-center">LIST PRODUCTS</h2>
-        {prods}
+      <div className="home-container">
+        <h2 className="section-title">📱 ALL PRODUCTS</h2>
+
+        <div className="product-grid">
+          {prods}
+        </div>
       </div>
     );
   }
 
   componentDidMount() {
-    // first: /product/...
     const params = this.props.params;
 
     if (params.cid) {
       this.apiGetProductsByCatID(params.cid);
     } else if (params.keyword) {
       this.apiGetProductsByKeyword(params.keyword);
+    } else {
+      this.apiGetProducts();
     }
-      else {
-      this.apiGetProducts();   
-  }
   }
 
   componentDidUpdate(prevProps) {
-    // changed: /product/...
     const params = this.props.params;
 
     if (params.cid && params.cid !== prevProps.params.cid) {
@@ -70,25 +69,22 @@ class Product extends Component {
     }
   }
 
-  // apis
+  // APIs
   apiGetProducts() {
     axios.get('/api/customer/products').then((res) => {
-      const result = res.data;
-      this.setState({ products: result });
+      this.setState({ products: res.data });
     });
   }
 
   apiGetProductsByCatID(cid) {
     axios.get('/api/customer/products/category/' + cid).then((res) => {
-      const result = res.data;
-      this.setState({ products: result });
+      this.setState({ products: res.data });
     });
   }
 
   apiGetProductsByKeyword(keyword) {
     axios.get('/api/customer/products/search/' + keyword).then((res) => {
-      const result = res.data;
-      this.setState({ products: result });
+      this.setState({ products: res.data });
     });
   }
 }

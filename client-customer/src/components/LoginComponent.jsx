@@ -4,61 +4,58 @@ import MyContext from '../contexts/MyContext';
 import withRouter from '../utils/withRouter';
 
 class Login extends Component {
-  static contextType = MyContext; // using this.context to access global state
+  static contextType = MyContext;
 
   constructor(props) {
     super(props);
     this.state = {
-      txtUsername: 'sonkk',
-      txtPassword: '123'
+      txtUsername: '',
+      txtPassword: ''
     };
   }
 
   render() {
-    return (
-      <div className="align-center">
-        <h2 className="text-center">CUSTOMER LOGIN</h2>
+    return (  
+      <div className="login-page">
 
-        <form>
-          <table className="align-center">
-            <tbody>
+        <div className="login-card">
+          <h2>Đăng Nhập 👋</h2>
+          <p className="login-sub">Login to your account</p>
 
-              <tr>
-                <td>Username</td>
-                <td>
-                  <input
-                    type="text"
-                    value={this.state.txtUsername}
-                    onChange={(e) => this.setState({ txtUsername: e.target.value })}
-                  />
-                </td>
-              </tr>
+          <form>
+            <input
+              type="text"
+              placeholder="Username"
+              value={this.state.txtUsername}
+              onChange={(e) =>
+                this.setState({ txtUsername: e.target.value })
+              }
+            />
 
-              <tr>
-                <td>Password</td>
-                <td>
-                  <input
-                    type="password"
-                    value={this.state.txtPassword}
-                    onChange={(e) => this.setState({ txtPassword: e.target.value })}
-                  />
-                </td>
-              </tr>
+            <input
+              type="password"
+              placeholder="Password"
+              value={this.state.txtPassword}
+              onChange={(e) =>
+                this.setState({ txtPassword: e.target.value })
+              }
+            />
 
-              <tr>
-                <td></td>
-                <td>
-                  <input
-                    type="submit"
-                    value="LOGIN"
-                    onClick={(e) => this.btnLoginClick(e)}
-                  />
-                </td>
-              </tr>
+            <button onClick={(e) => this.btnLoginClick(e)}>
+              LOGIN
+            </button>
+          </form>
 
-            </tbody>
-          </table>
-        </form>
+          {/* 🔥 THÊM SIGNUP LINK */}
+          <p className="login-link">
+            Bạn chưa có tài khoản?{" "}
+            <span onClick={() => this.props.navigate('/signup')}>
+              Đăng ký ngay
+            </span>
+          </p>
+
+        </div>
+
       </div>
     );
   }
@@ -86,7 +83,6 @@ class Login extends Component {
       if (result.success === true) {
         this.context.setToken(result.token);
         this.context.setCustomer(result.customer);
-
         this.props.navigate('/home');
       } else {
         alert(result.message);

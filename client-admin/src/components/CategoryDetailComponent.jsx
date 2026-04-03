@@ -13,70 +13,55 @@ class CategoryDetail extends Component {
     };
   }
 
-  // ===== RENDER =====
   render() {
     return (
-      <div className="float-right">
-        <h2 className="text-center">CATEGORY DETAIL</h2>
-        <form>
-          <table>
-            <tbody>
-              <tr>
-                <td>ID</td>
-                <td>
-                  <input
-                    type="text"
-                    value={this.state.txtID}
-                    readOnly
-                  />
-                </td>
-              </tr>
+      <div className="card form-card">
+        <h2>📂 Category Detail</h2>
 
-              <tr>
-                <td>Name</td>
-                <td>
-                  <input
-                    type="text"
-                    value={this.state.txtName}
-                    onChange={(e) =>
-                      this.setState({ txtName: e.target.value })
-                    }
-                  />
-                </td>
-              </tr>
+        {/* ID */}
+        <label>ID</label>
+        <input type="text" value={this.state.txtID} readOnly />
 
-              <tr>
-                <td></td>
-                <td>
-                  <input
-                    type="button"
-                    value="ADD NEW"
-                    onClick={(e) => this.btnAddClick(e)}
-                  />
-                  &nbsp;
-                  <input
-                    type="button"
-                    value="UPDATE"
-                    onClick={(e) => this.btnUpdateClick(e)}
-                  />
-                  &nbsp;
-                  <input
-                    type="button"
-                    value="DELETE"
-                    onClick={(e) => this.btnDeleteClick(e)}
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </form>
+        {/* NAME */}
+        <label>Name</label>
+        <input
+          type="text"
+          value={this.state.txtName}
+          onChange={(e) =>
+            this.setState({ txtName: e.target.value })
+          }
+        />
+
+        {/* BUTTON */}
+        <div style={{ display: "flex", gap: "10px", marginTop: "15px" }}>
+
+          <button
+            className="btn btn-add"
+            onClick={(e) => this.btnAddClick(e)}
+          >
+            Add
+          </button>
+
+          <button
+            className="btn btn-update"
+            onClick={(e) => this.btnUpdateClick(e)}
+          >
+            Update
+          </button>
+
+          <button
+            className="btn btn-delete"
+            onClick={(e) => this.btnDeleteClick(e)}
+          >
+            Delete
+          </button>
+
+        </div>
       </div>
     );
   }
 
-  // ===== LIFECYCLE =====
   componentDidUpdate(prevProps) {
-    // chỉ update state khi chọn category khác (so theo ID)
     if (
       this.props.item &&
       (!prevProps.item ||
@@ -90,12 +75,12 @@ class CategoryDetail extends Component {
   }
 
   // ===== EVENTS =====
+
   btnAddClick(e) {
     e.preventDefault();
     const name = this.state.txtName;
     if (name) {
-      const cate = { name: name };
-      this.apiPostCategory(cate);
+      this.apiPostCategory({ name });
     } else {
       alert('Please input name');
     }
@@ -103,11 +88,9 @@ class CategoryDetail extends Component {
 
   btnUpdateClick(e) {
     e.preventDefault();
-    const id = this.state.txtID;
-    const name = this.state.txtName;
-    if (id && name) {
-      const cate = { name: name };
-      this.apiPutCategory(id, cate);
+    const { txtID, txtName } = this.state;
+    if (txtID && txtName) {
+      this.apiPutCategory(txtID, { name: txtName });
     } else {
       alert('Please input id and name');
     }
@@ -125,7 +108,8 @@ class CategoryDetail extends Component {
     }
   }
 
-  // ===== APIS =====
+  // ===== API =====
+
   apiGetCategories() {
     const config = { headers: { 'x-access-token': this.context.token } };
     axios.get('/api/admin/categories', config).then((res) => {
@@ -137,11 +121,9 @@ class CategoryDetail extends Component {
     const config = { headers: { 'x-access-token': this.context.token } };
     axios.post('/api/admin/categories', cate, config).then((res) => {
       if (res.data) {
-        alert('OK BABY!');
+        alert('Added!');
         this.apiGetCategories();
         this.setState({ txtID: '', txtName: '' });
-      } else {
-        alert('SORRY BABY!');
       }
     });
   }
@@ -150,10 +132,8 @@ class CategoryDetail extends Component {
     const config = { headers: { 'x-access-token': this.context.token } };
     axios.put('/api/admin/categories/' + id, cate, config).then((res) => {
       if (res.data) {
-        alert('OK BABY!');
+        alert('Updated!');
         this.apiGetCategories();
-      } else {
-        alert('SORRY BABY!');
       }
     });
   }
@@ -162,11 +142,9 @@ class CategoryDetail extends Component {
     const config = { headers: { 'x-access-token': this.context.token } };
     axios.delete('/api/admin/categories/' + id, config).then((res) => {
       if (res.data) {
-        alert('OK BABY!');
+        alert('Deleted!');
         this.apiGetCategories();
         this.setState({ txtID: '', txtName: '' });
-      } else {
-        alert('SORRY BABY!');
       }
     });
   }

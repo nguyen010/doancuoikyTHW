@@ -1,10 +1,10 @@
 const MyConstants = {
-    DB_USER: 'BanHang',
-    DB_PASS: 'Qndka9mhoOJI0yHn',
-    DB_SERVER: 'banhang.ibjgoyr.mongodb.net',
+    DB_USER: 'Nguyen',
+    DB_PASS: '123',
+    DB_SERVER: 'ac-ejzcn6w-shard-00-00.6fhc5mv.mongodb.net', // Hoặc dùng banhang.ibjgoyr.mongodb.net nếu server cũ vẫn chạy
     DB_DATABASE: 'shoppingonline',
-    EMAIL_USER: 'email@gmail.com', 
-    EMAIL_PASS: '<email_pass>',
+    EMAIL_USER: 'maivan7896@gmail.com',
+    EMAIL_PASS: 'jxby jrca hsih itpk',
     JWT_SECRET: 'abc123!@#',
     JWT_EXPRES: '24h',
 };
