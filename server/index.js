@@ -33,6 +33,6 @@ app.get(/.*/, (req, res) => {
 });
 
 // ================= RUN =================
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server listening on ${PORT}`);
 });
